@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Secret Letter 💌</title>
+<meta name="description" content="A secret romantic letter. Enter the special code to open it.">
+<meta name="robots" content="index,follow">
+<style>
+*{box-sizing:border-box} body{margin:0;min-height:100vh;overflow-x:hidden;font-family:Georgia,serif;background:radial-gradient(circle at top,#fff5fa,#ffdce9 45%,#f6b6d0);color:#6d2948}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(#fff8 1px,transparent 1px);background-size:28px 28px}
+.wrap{min-height:100vh;display:grid;place-items:center;padding:28px 16px;position:relative}
+.card{width:min(560px,100%);padding:34px 24px;border:1px solid #fff9;border-radius:30px;background:#ffffffbb;backdrop-filter:blur(12px);box-shadow:0 24px 70px #8e315433;text-align:center;position:relative;z-index:2}
+.lock{font-size:58px;animation:pulse 2s infinite}.tag{letter-spacing:4px;text-transform:uppercase;font:700 12px Arial;color:#a44d70}
+h1{font-size:clamp(32px,8vw,52px);margin:10px 0;color:#7e214b}
+p{line-height:1.6}.hint{font-size:14px;color:#9a6078}
+input{width:100%;padding:16px 18px;border-radius:15px;border:2px solid #efb3cb;background:#fff;font-size:18px;text-align:center;letter-spacing:2px;outline:none}
+input:focus{border-color:#bd4c7a;box-shadow:0 0 0 4px #bd4c7a22}
+button{margin-top:14px;width:100%;padding:16px;border:0;border-radius:15px;background:#9e2f5c;color:#fff;font-size:17px;font-weight:bold;cursor:pointer;box-shadow:0 10px 24px #9e2f5c44}
+button:hover{transform:translateY(-1px)}
+#error{min-height:24px;color:#a51f4d;font-weight:bold;margin-top:12px}
+#letter{display:none;width:min(1000px,100%);position:relative;z-index:2;text-align:center;animation:open .9s ease}
+#letter img{width:100%;height:auto;border-radius:18px;box-shadow:0 25px 70px #7e214b44;display:block}
+.back{margin:18px auto 0;width:auto;padding:11px 20px;background:#fff;color:#8c2d55}
+.heart{position:fixed;bottom:-40px;font-size:24px;animation:float linear forwards;pointer-events:none;z-index:5}
+@keyframes pulse{50%{transform:scale(1.08)}} @keyframes open{from{opacity:0;transform:translateY(35px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes float{to{transform:translateY(-115vh) rotate(25deg);opacity:0}}
+@media(max-width:480px){.card{padding:28px 18px}.lock{font-size:48px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="card" id="gate">
+    <div class="lock">💌</div>
+    <div class="tag">A little secret</div>
+    <h1>A Secret Letter Awaits You…</h1>
+    <p>Some things are meant for one special person only. 💕</p>
+    <p class="hint">Enter the special code to open my heart.</p>
+    <input id="code" type="text" autocomplete="off" placeholder="Enter the secret code">
+    <button onclick="openLetter()">OPEN MY LETTER 💗</button>
+    <div id="error"></div>
+    <p class="hint">Only the right code can open this heart.</p>
+  </section>
+
+  <section id="letter">
+    <img src="love-letter.png" alt="A romantic secret love letter and memories">
+    <button class="back" onclick="closeLetter()">↩ Lock the letter</button>
+  </section>
+</div>
+<script>
+const SECRET_CODE="MA-910-223";
+const gate=document.getElementById("gate"), letter=document.getElementById("letter"), input=document.getElementById("code"), error=document.getElementById("error");
+function hearts(){
+  for(let i=0;i<22;i++) setTimeout(()=>{
+    const h=document.createElement("div"); h.className="heart"; h.textContent=["❤️","💕","💗","💖","♡"][Math.floor(Math.random()*5)];
+    h.style.left=Math.random()*100+"vw"; h.style.animationDuration=(4+Math.random()*4)+"s"; h.style.fontSize=(16+Math.random()*22)+"px";
+    document.body.appendChild(h); setTimeout(()=>h.remove(),8500);
+  },i*90);
+}
+function openLetter(){
+  if(input.value.trim().toUpperCase()===SECRET_CODE){
+    error.textContent=""; gate.style.display="none"; letter.style.display="block"; hearts(); window.scrollTo({top:0,behavior:"smooth"});
+  } else { error.textContent="That code isn't quite right. 💔"; input.select(); }
+}
+function closeLetter(){letter.style.display="none";gate.style.display="block";input.value="";input.focus()}
+input.addEventListener("keydown",e=>{if(e.key==="Enter")openLetter()});
+</script>
+</body>
+</html>
